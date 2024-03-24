@@ -1,0 +1,128 @@
+* {
+    margin: 0%;
+    padding: 0%;
+}
+
+body {
+    background: url(images/b.jpg);
+    background-size: cover;
+    text-align: center;
+    font-family: arial;
+    height: 100vh;
+}
+
+.logo {
+    padding-top: 30px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.content {
+    background-color: rgb(97, 89, 89);
+    border-radius: 20px;
+    border-width: 1px;
+    width: 55vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2vh;
+    margin: 3% 0;
+    box-shadow: 0 0 8vh 0 rgba(139, 16, 2, 1);
+}
+
+.name_head {
+    color: rgb(243, 33, 33);
+}
+
+.name_tail {
+    color: rgb(1, 1, 255);
+}
+
+h2 {
+    padding: 0 0 10px 0;
+    font-size: 30px;
+}
+
+.content p {
+    padding-bottom: 10px;
+}
+
+input {
+    margin-top: 1vh;
+    height: 25px;
+    border: solid rgb(6, 6, 6);
+    background-color: rgb(97, 89, 89);
+    color: aliceblue;
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 5px;
+}
+
+.first_name,
+.last_name {
+    float: left;
+    width: 25vh;
+}
+
+.last_name {
+    float: right;
+    width: 25vh;
+}
+
+.email_phone {
+    width: 53vh;
+}
+
+.password {
+    width: 53vh;
+    margin-bottom: 1vh;
+}
+
+button {
+    background: transparent;
+    border-color: rgb(7, 7, 7);
+    padding: 1.7vh;
+    margin-top: 2vh;
+    width: 25vh;
+    border-radius: 50px;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: bold;
+    font-size: 15px;
+    color: whitesmoke;
+}
+
+.sign_up button:hover {
+    border: 1px solid rgb(243, 33, 33);
+}
+
+.sign_up button:focus {
+    border: 1px solid rgb(243, 33, 33);
+    outline: none;
+}
+
+.account {
+    margin: 20px 0 10px 0;
+}
+
+.account a {
+    text-decoration: none;
+    color: snow;
+}
+
+.account a:hover {
+    color: black;
+}
+
+
+input:hover {
+    border: 1px solid rgb(243, 33, 33);
+}
+
+input:focus {
+    border: 1px solid rgb(243, 33, 33);
+    outline: none;
+}
