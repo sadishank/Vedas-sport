@@ -4,7 +4,7 @@
 }
 
 body {
-    background: url(images/b.jpg);
+    background-image: url(../images/b.jpg);
     background-size: cover;
     text-align: center;
     font-family: arial;
@@ -20,7 +20,7 @@ a {
 }
 
 .content {
-    background-color: rgb(97, 89, 89);
+    background-color: rgba(97, 89, 89, 0.5);
     border-radius: 20px;
     border-width: 1px;
     width: 55vh;
@@ -115,6 +115,34 @@ button {
 
 .account a:hover {
     color: black;
+
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Show the dropdown content when hovering over the profile section */
+.profile:hover .dropdown-content {
+    display: block;
+}
+
+/* Style the links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change the background color of links on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
 }
 
 

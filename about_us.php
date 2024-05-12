@@ -1,3 +1,11 @@
+<?php
+$firstletter = "Profile";
+session_start();
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+    $firstletter = substr($email, 0, strpos($email, '@'));  //
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +18,35 @@
     <link rel="icon" type="image/x-icon" href="/images/logo1.png">
 </head>
 </head>
+<style>
+    /* Hide the dropdown content by default */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 120px;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    /* Show the dropdown content when hovering over the profile section */
+    .profile:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Style the links inside the dropdown */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    /* Change the background color of links on hover */
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+</style>
 
 <body>
 
@@ -29,15 +66,28 @@
                         <img src="images/logo.png" alt="logo">
                     </div>
 
-                    <div onclick="location.href='cart.html';" class="profile">
-                        <span><i class="fa-solid fa-user"></i> PROFILE </span>
+                    <div class="profile">
+                        <span><i class="fa-solid fa-user"></i>
+                            <?php echo $firstletter ?>
+                        </span>
+                        <div class="dropdown-content">
+                            <a href="cart.php">Your Cart</a>
+                            <!-- <a href="logout.php">Logout</a> -->
+                            <?php if (!isset($_SESSION['email'])) {
+                                echo "<a href='./login_register/login.php'>Login</a>";
+                            } else {
+                                echo "<a href='./login_register/logout.php'>Logout</a>";
+
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
 
                 <div class="nav">
                     <ul>
                         <li onclick="location.href='home.php';">home</li>
-                        <li onclick="location.href='products.php';">product</li>
+                        <li onclick="location.href='product.php';">product</li>
                         <li onclick="location.href='about_us.php';">about us</li>
                         <li onclick="location.href='contact_us.php';">contact us</li>
                     </ul>
@@ -117,7 +167,7 @@
                             <img src="images/sadishan.jpg">
                         </div>
                         <div class="back-face">
-                            <h2>Mr.Bazgain</h2>
+                            <h2>Mr.Sadishan Khadka</h2>
                             <p>I'm Software Developer.</p>
                             <p class="details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut neque quis
                                 optio voluptatum

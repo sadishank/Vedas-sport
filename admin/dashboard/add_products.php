@@ -1,6 +1,66 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    form {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    .form-control {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 10px;
+    }
+
+    select.form-control {
+        margin-bottom: 15px;
+    }
+
+    .container li {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .container li a {
+        text-decoration: none;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+
+        border: 1px solid #007bff;
+        padding: 8px 16px;
+        border-radius: 5px;
+    }
+
+    .container a:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+
 <?php
 include ('../../includes/connect.php');
-if (isset ($_POST['add_products'])) {
+if (isset($_POST['add_products'])) {
     $product_name = $_POST['product_name'];
     $product_brand = $_POST['product_brand'];
     $product_description = $_POST['product_description'];
@@ -12,7 +72,7 @@ if (isset ($_POST['add_products'])) {
 
 
     if ($product_name == '' or $product_brand == '' or $product_description == '' or $product_image1 == '' or $product_price == '') {
-        echo "<script> alert! please complete the form.</script>";
+        echo "<script>alert('Please fill out the form.')</script>";
         exit();
     } else {
         move_uploaded_file($temp_image1, "../product_images/$product_image1");
@@ -20,7 +80,9 @@ if (isset ($_POST['add_products'])) {
         $add_products = "Insert into `products` (product_name,brand_id,product_image1,product_description,product_price) values ('$product_name','$product_brand','$product_image1','$product_description','$product_price')";
         $result_query = mysqli_query($con, $add_products);
         if ($result_query) {
-            echo "<script>Sucessfully inserted the Product</script>";
+            echo "<script>alert('Sucessfully inserted the Product')</script>";
+            echo "<script>window.open('dashboard.php','_self')</script>";
+
         }
     }
 }
@@ -40,7 +102,11 @@ if (isset ($_POST['add_products'])) {
 <body>
     <div class="container">
         <h1>Add Products to Inventory</h1>
+        <li><a href="dashboard.php">Main Menu</a></li>
+
+
         <div>
+
             <form action="" method="post" enctype="multipart/form-data">
                 <div>
                     <label for="product_name" class="form-label">Product Name</label>
