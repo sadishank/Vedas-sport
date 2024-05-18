@@ -47,49 +47,61 @@
         .delete-btn:hover {
             background-color: #cc0000;
         }
+
+        .fa-trash-button {
+            color: red;
+        }
     </style>
 </head>
 
 <body>
     <h1>User List</h1>
-    <?php
-    $get = "SELECT * FROM `register`";
-    $result = mysqli_query($con, $get);
-    $row_count = mysqli_num_rows($result);
+    <table>
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>User ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $get = "SELECT * FROM `register`";
+            $result = mysqli_query($con, $get);
+            $row_count = mysqli_num_rows($result);
 
-    if ($row_count == 0) {
-        echo "<h3>No users Registered yet</h3>";
-    } else {
-        echo "<table>
-                <thead>
+            if ($row_count == 0) {
+                echo "<h3>No users Registered yet</h3>";
+            } else {
+                $number = 0;
+                while ($row_data = mysqli_fetch_assoc($result)) {
+                    $user_id = $row_data['user_id'];
+                    $firstname = $row_data['firstname'];
+                    $lastname = $row_data['lastname'];
+                    $email = $row_data['email'];
+                    $number++;
+                    ?>
                     <tr>
-                        <th>S.No</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>";
-        $number = 0;
-        while ($row_data = mysqli_fetch_assoc($result)) {
-            $user_id = $row_data['user_id'];
-            $firstname = $row_data['firstname'];
-            $lastname = $row_data['lastname'];
-            $email = $row_data['email'];
-            $number++;
-            echo "<tr>
-                    <td>$number</td>
-                    <td>$firstname</td>
-                    <td>$lastname</td>
-                    <td>$email</td>
-                    <td><a href='delete_users.php?id=<?php echo $user_id ?>' class='delete-btn'>Delete</a></td>
+                        <td><?php echo $number; ?></td>
+                        <td><?php echo $user_id; ?></td>
+                        <td><?php echo $firstname; ?></td>
+                        <td><?php echo $lastname; ?></td>
+                        <td><?php echo $email; ?></td>
+                        <td><a href='dashboard.php?delete_users=<?php echo $user_id ?>'><i
+                                    class='fa-solid fa-trash fa-trash-button'></i></a>
+                        </td>
 
-                  </tr>";
-        }
-        echo "</tbody></table>";
-    }
-    ?>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
+        </tbody>
+
+    </table>
 </body>
 
 </html>

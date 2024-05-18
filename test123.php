@@ -1,8 +1,15 @@
 <?php
-include ('../includes/connect.php');
-include ('../functions/common_functions.php');
 
-@session_start();
+
+session_start();
+include ('./includes/connect.php');
+include ('./functions/common_functions.php');
+
+// if (isset($_SESSION['email'])) {
+//     $email = $_SESSION['email'];
+//     $firstletter = substr($email, 0, strpos($email, '@'));  //
+
+// }
 
 if (isset($_POST['login'])) {
     $user_name = $_POST['username'];
@@ -20,26 +27,16 @@ if (isset($_POST['login'])) {
     $row_count_cart = mysqli_num_rows($select_cart);
 
     if ($row_count > 0) {
-        $_SESSION['username'] = $user_name;
         if (password_verify($user_password, $row_data['password'])) {
-            if ($row_count == 1 and $row_count_cart == 0) {
-                $_SESSION['username'] = $user_name;
-                echo "<script>alert('Successfully logged in')</script>";
-                echo "<script>window.open('../home.php','_self')</script>";
+            $_SESSION['username'] = $user_name; // Set the email in the session
+            echo "<script>alert('Successfully logged in')</script>";
+            echo "<script>window.open('login_register/cash.php','_self')</script>";
 
-            } else {
-                $_SESSION['username'] = $user_name;
-                echo "<script>alert('Login sucessfull')</script>";
-                header("Location: cash.php?alert=You_had_some_items_in_cart");
-
-            }
         } else {
             echo "<script>alert('Invalid Credentials')</script>";
-
         }
     } else {
         echo "<script>alert('Invalid Credentials')</script>";
-
     }
 }
 ?>
@@ -54,41 +51,24 @@ if (isset($_POST['login'])) {
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="/images/logo1.png">
+    <link rel="stylesheet" href="login.css">
     <style>
-        /* Dropdown container */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-
-        }
-
-        /* Dropdown button */
-        .dropbtn {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-
-        /* Dropdown content (hidden by default) */
+        /* Hide the dropdown content by default */
         .dropdown-content {
             display: none;
             position: absolute;
             background-color: #f9f9f9;
-            min-width: 160px;
+            min-width: 120px;
             box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
             z-index: 1;
-            white-space: nowrap;
-            /* Prevents text from wrapping to next line */
-            overflow: hidden;
-            /* Hides any content that overflows horizontally */
-            text-overflow: ellipsis;
-            /* Displays ellipsis (...) when content is clipped */
         }
 
-        /* Links inside the dropdown */
+        /* Show the dropdown content when hovering over the profile section */
+        .profile:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Style the links inside the dropdown */
         .dropdown-content a {
             color: black;
             padding: 12px 16px;
@@ -96,29 +76,9 @@ if (isset($_POST['login'])) {
             display: block;
         }
 
-        /* Change color of dropdown links on hover */
+        /* Change the background color of links on hover */
         .dropdown-content a:hover {
             background-color: #f1f1f1;
-        }
-
-        /* Show the dropdown menu on hover */
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        /* Add this to your existing CSS */
-        .dropdown-content {
-            /* existing styles */
-            white-space: nowrap;
-            /* Prevents text from wrapping to next line */
-            overflow: hidden;
-            /* Hides any content that overflows horizontally */
-            text-overflow: ellipsis;
-            /* Displays ellipsis (...) when content is clipped */
-        }
-
-        body {
-            overflow-x: hidden;
         }
     </style>
 </head>
@@ -136,43 +96,13 @@ if (isset($_POST['login'])) {
                         <img src="../images/logo.png" alt="" />
                     </div>
 
-                    <div class="dropdown">
-                        <button class="dropbtn">
-                            <?php
-                            // Username display
-                            if (!isset($_SESSION['username'])) {
-                                echo "Guest";
-                            } else {
-                                echo $_SESSION['username'];
-                            }
-                            ?>
-                        </button>
-                        <div class="dropdown-content">
-                            <?php
-                            if (isset($_SESSION['username'])) {
-                                echo "<a href='../cart.php'>My Cart</a>";
-                                echo "<a href='profile.php'>My Profile</a>";
-                                echo "<a href='logout.php'>Logout</a>";
-
-                            } else {
-                                echo "<a href='../cart.php'>My Cart</a>";
-                                echo "<a href='login.php'>Login</a>";
-                                echo "<a href='register.php'>Register</a>";
-                            }
-                            ?>
-                        </div>
+                    <div class="profile">
+                        <span><i class="fa-solid fa-user"></i>
                     </div>
                 </div>
             </div>
 
-            <div class="nav">
-                <ul>
-                    <li><a href="../home.php">home</a></li>
-                    <li><a href="../product.php">product</a></li>
-                    <li><a href="../about_us.php">about us</a></li>
-                    <li><a href="../contact_us.php">contact us</a></li>
-                </ul>
-            </div>
+            <h1 background-color="white">Login first in order to checkout</h1>
         </div>
     </div>
 
@@ -229,4 +159,14 @@ if (isset($_POST['login'])) {
                 </h3>
                 <form>
                     <i class="fa-regular fa-message"></i>
-                    <input type
+                </form>
+
+                <div class="session">
+                    <?php if (!isset($_SESSION['username'])) {
+                        include ('login_register/login.php');
+                    } else {
+                        include ('login_register/cash.php');
+                    }
+
+                    ?>
+                </div>

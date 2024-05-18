@@ -30,6 +30,10 @@ include ('../../includes/connect.php');
         width: 100%;
         border-collapse: collapse;
         border: 2px solid black;
+        max-width: 100%;
+        /* Add this line to limit the maximum width of the table */
+        overflow-x: auto;
+        /* Add this line to enable horizontal scrolling */
     }
 
     th,
@@ -37,6 +41,8 @@ include ('../../includes/connect.php');
         border: 1px solid black;
         padding: 8px;
         text-align: left;
+        white-space: nowrap;
+        /* Add this line to prevent table cells from wrapping */
     }
 
     th {
@@ -50,7 +56,19 @@ include ('../../includes/connect.php');
         display: flex;
         align-items: center;
     }
+
+    /* Add this block to center the table */
+    table {
+        margin: 0 auto;
+    }
+
+    /* Add this block to reduce the font size of the table cells */
+    td,
+    th {
+        font-size: 0.9rem;
+    }
 </style>
+
 
 <body>
     <h1>All products</h1>

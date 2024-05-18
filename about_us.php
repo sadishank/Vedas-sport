@@ -1,10 +1,4 @@
-<?php
-$firstletter = "Profile";
-session_start();
-if (isset($_SESSION['email'])) {
-    $email = $_SESSION['email'];
-    $firstletter = substr($email, 0, strpos($email, '@'));  //
-}
+<?php session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,22 +13,44 @@ if (isset($_SESSION['email'])) {
 </head>
 </head>
 <style>
-    /* Hide the dropdown content by default */
+    /* Dropdown container */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Dropdown button */
+    .dropbtn {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Dropdown content (hidden by default) */
     .dropdown-content {
         display: none;
         position: absolute;
         background-color: #f9f9f9;
-        min-width: 120px;
+        min-width: 160px;
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
         z-index: 1;
+        white-space: nowrap;
+        /* Prevents text from wrapping to next line */
+        overflow: hidden;
+        /* Hides any content that overflows horizontally */
+        text-overflow: ellipsis;
+        /* Displays ellipsis (...) when content is clipped */
     }
 
-    /* Show the dropdown content when hovering over the profile section */
-    .profile:hover .dropdown-content {
-        display: block;
-    }
-
-    /* Style the links inside the dropdown */
+    /* Links inside the dropdown */
     .dropdown-content a {
         color: black;
         padding: 12px 16px;
@@ -42,9 +58,25 @@ if (isset($_SESSION['email'])) {
         display: block;
     }
 
-    /* Change the background color of links on hover */
+    /* Change color of dropdown links on hover */
     .dropdown-content a:hover {
         background-color: #f1f1f1;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Add this to your existing CSS */
+    .dropdown-content {
+        /* existing styles */
+        white-space: nowrap;
+        /* Prevents text from wrapping to next line */
+        overflow: hidden;
+        /* Hides any content that overflows horizontally */
+        text-overflow: ellipsis;
+        /* Displays ellipsis (...) when content is clipped */
     }
 </style>
 
@@ -66,18 +98,28 @@ if (isset($_SESSION['email'])) {
                         <img src="images/logo.png" alt="logo">
                     </div>
 
-                    <div class="profile">
-                        <span><i class="fa-solid fa-user"></i>
-                            <?php echo $firstletter ?>
-                        </span>
-                        <div class="dropdown-content">
-                            <a href="cart.php">Your Cart</a>
-                            <!-- <a href="logout.php">Logout</a> -->
-                            <?php if (!isset($_SESSION['email'])) {
-                                echo "<a href='./login_register/login.php'>Login</a>";
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <?php
+                            // Username display
+                            if (!isset($_SESSION['username'])) {
+                                echo "Guest";
                             } else {
+                                echo $_SESSION['username'];
+                            }
+                            ?>
+                        </button>
+                        <div class="dropdown-content">
+                            <?php
+                            if (isset($_SESSION['username'])) {
+                                echo "<a href='cart.php'>My Cart</a>";
+                                echo "<a href='login_register/profile.php'>My Profile</a>";
                                 echo "<a href='./login_register/logout.php'>Logout</a>";
 
+                            } else {
+                                echo "<a href='cart.php'>My Cart</a>";
+                                echo "<a href='./login_register/login.php'>Login</a>";
+                                echo "<a href='login_register/register.php'>Register</a>";
                             }
                             ?>
                         </div>

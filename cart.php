@@ -1,7 +1,8 @@
 <?php
-include ('./includes/connect.php');
+include ('includes/connect.php');
 include ('functions/common_functions.php');
 
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -113,21 +114,44 @@ include ('functions/common_functions.php');
             color: white;
         }
 
+        /* Dropdown container */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+
+        }
+
+        /* Dropdown button */
+        .dropbtn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Dropdown content (hidden by default) */
         .dropdown-content {
             display: none;
             position: absolute;
             background-color: #f9f9f9;
-            min-width: 120px;
+            min-width: 160px;
             box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
             z-index: 1;
+            white-space: nowrap;
+            /* Prevents text from wrapping to next line */
+            overflow: hidden;
+            /* Hides any content that overflows horizontally */
+            text-overflow: ellipsis;
+            /* Displays ellipsis (...) when content is clipped */
         }
 
-        /* Show the dropdown content when hovering over the profile section */
-        .profile:hover .dropdown-content {
-            display: block;
-        }
-
-        /* Style the links inside the dropdown */
+        /* Links inside the dropdown */
         .dropdown-content a {
             color: black;
             padding: 12px 16px;
@@ -135,9 +159,25 @@ include ('functions/common_functions.php');
             display: block;
         }
 
-        /* Change the background color of links on hover */
+        /* Change color of dropdown links on hover */
         .dropdown-content a:hover {
             background-color: #f1f1f1;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Add this to your existing CSS */
+        .dropdown-content {
+            /* existing styles */
+            white-space: nowrap;
+            /* Prevents text from wrapping to next line */
+            overflow: hidden;
+            /* Hides any content that overflows horizontally */
+            text-overflow: ellipsis;
+            /* Displays ellipsis (...) when content is clipped */
         }
     </style>
     <link rel="stylesheet" href="product.css">
@@ -153,11 +193,30 @@ include ('functions/common_functions.php');
                     <img src="images/logo.png" alt="logo">
                 </div>
 
-                <div class="profile">
-                    <span><i class="fa-solid fa-user"></i>Profile</span>
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <?php
+                        // Username display
+                        if (!isset($_SESSION['username'])) {
+                            echo "Guest";
+                        } else {
+                            echo $_SESSION['username'];
+                        }
+                        ?>
+                    </button>
                     <div class="dropdown-content">
-                        <a href="cart.php">Your Cart</a>
-                        <a href="logout.php">Logout</a>
+                        <?php
+                        if (isset($_SESSION['username'])) {
+                            echo "<a href='cart.php'>My Cart</a>";
+                            echo "<a href='login_register/profile.php'>My Profile</a>";
+                            echo "<a href='./login_register/logout.php'>Logout</a>";
+
+                        } else {
+                            echo "<a href='cart.php'>My Cart</a>";
+                            echo "<a href='./login_register/login.php'>Login</a>";
+                            echo "<a href='login_register/register.php'>Register</a>";
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -263,7 +322,7 @@ include ('functions/common_functions.php');
                         echo "<div>
                             <h3>Total amount: Rs: <strong>$total_price</strong>/-</h3>
                             <input type='submit' value='Explore more Products' name='Explore_More_products'>
-                            <button><a href='./login_register/cash.php'>Payment Checkout</a></button>
+                            <button><a href='./login_register/checkout.php'>Payment Checkout</a></button>
                         </div>";
                     } else {
                         echo "No items in the cart.";

@@ -67,9 +67,9 @@ include ('../../functions/common_functions.php');
             <li><a href="add_products.php">Add Products</a></li>
             <li><a href="dashboard.php?view_products">View Products</a></li>
             <li><a href="dashboard.php?add_brand">Add Brands</a></li>
-            <li><a href="#">View Brands</a></li>
+            <li><a href="dashboard.php?view_brands">View Brands</a></li>
             <li><a href="dashboard.php?view_users">View Users</a></li>
-            <li><a href="#">View Orders</a></li>
+            <li><a href="dashboard.php?view_orders">View Orders</a></li>
         </ul>
     </div>
 
@@ -95,6 +95,18 @@ include ('../../functions/common_functions.php');
         }
         if (isset($_GET['delete_users'])) {
             include ('delete_users.php');
+        }
+        if (isset($_GET['view_brands'])) {
+            include ('view_brands.php');
+        }
+        if (isset($_GET['delete_brand'])) {
+            include ('delete_brand.php');
+        }
+        if (isset($_GET['view_orders'])) {
+            include ('view_orders.php');
+        }
+        if (isset($_GET['delete_order'])) {
+            include ('delete_order.php');
         }
         ?>
 

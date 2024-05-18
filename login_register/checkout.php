@@ -1,36 +1,27 @@
 <?php
-include ('../includes/connect.php');
-
-
+@session_start();
+include ('../includes/connect.php'); // Ensure session is started
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
+
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout Process</title>
+    <title>Vedas Sports Store</title>
     <link rel="stylesheet" href="login.css">
-</head>
-
-<body>
-
     <div>
         <?php
-        if (!isset ($_SESSION['email'])) {
-            include ('login.php');
+        if (!isset($_SESSION['username'])) {
+            header("Location: login.php");
         } else {
-            include ('cash.php');
+            header("Location: cash.php");
         }
         ?>
     </div>
-
-
-
-
-
-
-</body>
+    </div>
+    </body>
 
 </html>

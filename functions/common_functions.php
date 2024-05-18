@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="product.css">
 
 <?php
-// include ('./includes/connect.php');
+
+
 
 
 // geting products
@@ -12,7 +13,7 @@ function getProducts()
     if (!isset($_GET['brand'])) {
         $select_query = "Select * from `products` order by rand()";
         $result_query = mysqli_query($con, $select_query);
-        
+
         echo "<div class='container'>";
         while ($row = mysqli_fetch_assoc($result_query)) {
             $product_id = $row['product_id'];
@@ -160,4 +161,76 @@ function cart_items()
 
 
 
+//get user order details//
+function get_user_order()
+{
+
+
+    global $con;
+    if (isset($_SESSION['username'])) {
+        $user_name = $_SESSION['username'];
+        $get_details = "SELECT * FROM `register` WHERE username = '$user_name'";
+        $result_query = mysqli_query($con, $get_details);
+        while ($row_query = mysqli_fetch_array($result_query)) {
+            $user_id = $row_query['user_id'];
+            if (!isset($_GET['my_orders'])) {
+                if (!isset($_GET['delete_account'])) {
+                    $get_orders = "select * from `user_orders` where user_id = $user_id and order_status = 'pending'";
+                    $result_orders_query = mysqli_query($con, $get_orders);
+                    $row_count = mysqli_num_rows($result_orders_query);
+                    if ($row_count > 0) {
+                        echo "<div class='order-info'><h3>You have <span>$row_count</span> orders</h3>
+                    <a href = 'profile.php?my_orders'>My Order Information</a></div>";
+
+
+                    } else {
+                        echo "<div class='order-info'><h3>You have no Pending Orders</h3>
+                    <a href = '../product.php'>Shop now</a></div>";
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
 ?>
+
+<style>
+    .order-info {
+        margin: 20px 0;
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .order-info h3 {
+        margin: 0;
+        font-size: 1.5em;
+        color: #333;
+    }
+
+    .order-info h3 span {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .order-info a {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .order-info a:hover {
+        background-color: #2980b9;
+    }
+</style>
